@@ -22,13 +22,7 @@ export default function SubscriptPage (){
 
             <h1>Escolha seu plano</h1>
 
-            {plans.map( (item ) =>{
-               return <PlanComponent
-               key={item.id}
-               id={item.id}
-               image={item.image}
-               price={item.price}/>
-            })}
+            {renderingComponents(plans)}
 
         </MainContainer>
     )
@@ -43,6 +37,26 @@ function PlanComponent ({id ,price, image}){
             </Container>
         </Link>
     )
+}
+function renderingComponents (plans){
+    if (plans.length > 0){
+        return(
+            <>
+                {plans.map( (item ) =>{
+                return <PlanComponent
+                key={item.id}
+                id={item.id}
+                image={item.image}
+                price={item.price}/>
+                })}
+            </>
+        )
+    } else {
+        return (
+            <h1>Carregando...</h1> // ! ADD UMA LIB DE LOADING CIRCULAR HERE
+        )
+    }
+    
 }
 
 
@@ -62,17 +76,13 @@ function PlanComponent ({id ,price, image}){
 
 const MainContainer = styled.div`
     display: flex; justify-content: center; flex-direction: column; align-items: center;
-    gap: 30px;
-    margin: 40px 10px 0px 10px;
+    gap: 20px;
+    margin: 0px 10px 0px 10px;
     h1{
         font-size: 2em;
         text-align: center;
         font-weight: bold;
     }
-
-    border: 1px solid #7E7E7E; border-radius: 5px;
-    padding: 20px;
-    
 `
 
 const Container = styled.div`
@@ -80,8 +90,9 @@ const Container = styled.div`
     width: 100%;
     display: flex;    align-items: center;     justify-content: center;
     max-width: 300px;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 20px;
+    padding: 30px 10px;
+    gap: 30px;
     p{
         font-size: 24px;
         font-weight: bold;

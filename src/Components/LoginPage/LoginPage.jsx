@@ -18,7 +18,7 @@ function login(email, password, e, setToken, navigate){
         if(resp.data.membership === null){
             navigate('/subscriptions');
         } else {
-            navigate('/home');
+            navigate('/subscriptions');
         }
     })
     .catch(
