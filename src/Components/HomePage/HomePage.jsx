@@ -7,6 +7,7 @@ export default function HomePage (){
     const name = userData.name;
     const drivenPlanIco = userData.membership.image;
     const perks = userData.membership.perks;
+    console.log(userData, ' userData no HomePage')
 
     return(
         <MainContainer>
@@ -37,6 +38,22 @@ export default function HomePage (){
 
     )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const MainContainer = styled.div`
     //background-color: lightgray;

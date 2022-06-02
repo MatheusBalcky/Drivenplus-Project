@@ -78,7 +78,7 @@ export default function PlanPage (){
 
 function FormComponent({ membershipId, setOpenModal, signed }){
     const { token } = useContext(tokenContext);
-    const { setUserData } = useContext(userDataContext);
+    const { userData, setUserData } = useContext(userDataContext);
     const navigate = useNavigate();
     const [cardName, setCardName] = useState('');
     const [cardNumber, setCardNumber] = useState('');
@@ -95,11 +95,15 @@ function FormComponent({ membershipId, setOpenModal, signed }){
 
     if(signed === true){
         const URL = 'https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions';
-        const URLUSER = 'https://mock-api.driven.com.br/api/v4/driven-plus/users/${}'
         const promise = axios.post(URL, body, { headers: { Authorization: `Bearer ${token}`}})
+
         promise
         .then( resp =>{
-            console.log(resp.data, ' resposta ao assinar')
+            console.log(resp.data, ' resposta ao assinar');
+            setUserData({
+                userData,
+                membership: resp.data.membership,
+            })
             navigate('/home')
         })
         .catch( err => console.log(err.response))
