@@ -77,7 +77,7 @@ function renderingComponents (plans){
 const MainContainer = styled.div`
     display: flex; justify-content: center; flex-direction: column; align-items: center;
     gap: 20px;
-    margin: 0px 10px 0px 10px;
+    margin: 40px 10px 0px 10px;
     h1{
         font-size: 2em;
         text-align: center;

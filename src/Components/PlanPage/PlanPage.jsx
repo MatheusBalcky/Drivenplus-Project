@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import tokenContext from "../../context/tokenContext";
+import userDataContext from "../../context/userDataContext";
 import IconDollarBill from '../../assets/dollarbill-icon.svg';
 import IconShapeList from '../../assets/shape-list-icon.svg';
 
@@ -33,6 +34,7 @@ export default function PlanPage (){
     // * RETURN DA FUNÇÃO
     if (perks.length > 0){
         return(
+            <Background>
             <Container>
 
                 <Modal openModal={openModal}>
@@ -62,6 +64,7 @@ export default function PlanPage (){
                 <FormComponent signed={signed} setOpenModal={setOpenModal}  membershipId={plan.id}/>
     
             </Container>
+            </Background>
         )
     } else {
         return(
@@ -71,8 +74,11 @@ export default function PlanPage (){
 
 }
 
+
+
 function FormComponent({ membershipId, setOpenModal, signed }){
     const { token } = useContext(tokenContext);
+    const { setUserData } = useContext(userDataContext);
     const navigate = useNavigate();
     const [cardName, setCardName] = useState('');
     const [cardNumber, setCardNumber] = useState('');
@@ -87,15 +93,13 @@ function FormComponent({ membershipId, setOpenModal, signed }){
         expirationDate
     }
 
-    console.log(body)
-    console.log('oi', signed)
-
     if(signed === true){
         const URL = 'https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions';
+        const URLUSER = 'https://mock-api.driven.com.br/api/v4/driven-plus/users/${}'
         const promise = axios.post(URL, body, { headers: { Authorization: `Bearer ${token}`}})
         promise
         .then( resp =>{
-            console.log(resp.data)
+            console.log(resp.data, ' resposta ao assinar')
             navigate('/home')
         })
         .catch( err => console.log(err.response))
@@ -153,6 +157,7 @@ function renderingInformations(arrayPerks, price){
             <h2><img src={IconDollarBill} alt="simbolo de um checklist" /> Preço:</h2>
 
             <p>R$ {priceWithComma} valor cobrados mensalmente</p>
+            
         </Informations>
     )
 }
@@ -173,15 +178,23 @@ function renderingInformations(arrayPerks, price){
 
 // & CSS STYLED COMPONENTS
 
+const Background = styled.div`
+    display: flex; justify-content: center; align-items: center;
+    width: 100vw;
+    height: 100vh;
+`
+
 const Container = styled.div`
     display: flex; flex-direction: column; justify-content: center; align-items: center;
     gap: 40px;
     margin: 0px 10px;
+
     ion-icon[name="arrow-back-outline"]{
         position: fixed;
         top: 20px;
         left: 20px;
         font-size: 2em;
+        color: white;
         &:hover{
             cursor: pointer;
         }

@@ -6,18 +6,22 @@ import { useState } from 'react'
 import LoginPage from './Components/LoginPage/LoginPage';
 import RegisterPage from './Components/RegisterPage/RegisterPage';
 import tokenContext from './context/tokenContext';
+import userDataContext from './context/userDataContext';
 import SubscriptPage from './Components/SubscriptionsPage/SubscriptionsPage';
 import HomePage from './Components/HomePage/HomePage';
 import PlanPage from './Components/PlanPage/PlanPage';
 
 function App(){
   const [token, setToken] = useState('');
+  const [userData, setUserData] = useState({});
 
 
   return (
 
     <BrowserRouter>
+
     <tokenContext.Provider value={{ token, setToken }}>
+    <userDataContext.Provider value={{ userData, setUserData }} >
 
       <Routes>
         <Route path='/' element={<LoginPage />} />
@@ -27,7 +31,9 @@ function App(){
         <Route path='/home' element={<HomePage />}/>
       </Routes>
 
+    </userDataContext.Provider>
     </tokenContext.Provider>
+
     </BrowserRouter>
 
   );

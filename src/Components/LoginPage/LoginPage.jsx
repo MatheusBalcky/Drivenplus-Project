@@ -4,35 +4,40 @@ import axios from 'axios';
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import tokenContext from '../../context/tokenContext';
-
-
-function login(email, password, e, setToken, navigate){
-    e.preventDefault();
-
-    const URL = 'https://mock-api.driven.com.br/api/v4/driven-plus/auth/login';
-    const promise = axios.post(URL, { email: 'math1@math2.com', password: '14253625'} );
-    promise
-    .then( resp=>{
-        console.log(resp.data)
-        setToken(resp.data.token)
-        if(resp.data.membership === null){
-            navigate('/subscriptions');
-        } else {
-            navigate('/subscriptions');
-        }
-    })
-    .catch(
-        err =>{
-            alert(err.response.data.message)
-        }
-    )
-}
+import userDataContext from '../../context/userDataContext';
 
 export default function HomePage (){
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { setToken } = useContext(tokenContext);
+    const { setUserData } = useContext(userDataContext);
+
+    function login(e){
+        e.preventDefault();
+    
+        const URL = 'https://mock-api.driven.com.br/api/v4/driven-plus/auth/login';
+        const promise = axios.post(URL, { email, password,} );
+        promise
+    
+        .then( resp=>{
+            console.log(resp.data);
+            setUserData(resp.data);
+            setToken(resp.data.token);
+            if(resp.data.membership === null){
+                navigate('/subscriptions');
+            } else {
+                navigate('/home');
+            }
+        })
+    
+        .catch(
+            err =>{
+                console.log(err)
+                alert(err.response.data.message);
+            }
+        )
+    }
 
     return(
 
@@ -41,7 +46,7 @@ export default function HomePage (){
 
                 <img width={'100%'} src={Logo} alt="Logo-Driven-Plus" />
 
-                <InputsContainer onSubmit={(e) => login(email, password, e, setToken, navigate)}>
+                <InputsContainer onSubmit={(e) => login(e)}>
                     
                     <input type="email"
                     placeholder='Email'
@@ -68,6 +73,9 @@ export default function HomePage (){
 
     )
 }
+
+
+
 
 
 
