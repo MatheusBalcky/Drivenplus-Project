@@ -1,19 +1,26 @@
 import userDataContext from "../../context/userDataContext";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 
 export default function HomePage (){
     const { userData } = useContext(userDataContext);
+    const navigate = useNavigate();
     const name = userData.name;
     const drivenPlanIco = userData.membership.image;
     const perks = userData.membership.perks;
-    console.log(userData, ' userData no HomePage')
+    console.log(userData, ' userData no HomePage');
+
+    function openUserInfo (){
+        console.log('teste')
+        navigate(`/users/${userData.id}`)
+    }
 
     return(
         <MainContainer>
             <header>
                 <img src={drivenPlanIco} alt="" />
-                <ion-icon name="person-circle"></ion-icon>
+                <ion-icon onClick={openUserInfo} name="person-circle"></ion-icon>
             </header>
             <br />
             <h1>Olá, {name}</h1>

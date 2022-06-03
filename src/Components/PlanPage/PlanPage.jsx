@@ -99,14 +99,14 @@ function FormComponent({ membershipId, setOpenModal, signed }){
 
         promise
         .then( resp =>{
-            console.log(resp.data, ' resposta ao assinar');
+            //console.log(resp.data, ' resposta ao assinar');
             setUserData({
                 userData,
                 membership: resp.data.membership,
             })
             navigate('/home')
         })
-        .catch( err => console.log(err.response))
+        .catch( err => alert(err.response.statusText))
     }
 
     function signButtonOpenModal (e){

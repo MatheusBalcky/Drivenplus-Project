@@ -10,6 +10,7 @@ import userDataContext from './context/userDataContext';
 import SubscriptPage from './Components/SubscriptionsPage/SubscriptionsPage';
 import HomePage from './Components/HomePage/HomePage';
 import PlanPage from './Components/PlanPage/PlanPage';
+import UserPage from './Components/UserPage/UserPage';
 
 function App(){
   const [token, setToken] = useState('');
@@ -24,11 +25,14 @@ function App(){
     <userDataContext.Provider value={{ userData, setUserData }} >
 
       <Routes>
+
         <Route path='/' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/subscriptions' element={<SubscriptPage />} />
         <Route path='/subscriptions/:IdPlano' element={<PlanPage />} />
         <Route path='/home' element={<HomePage />}/>
+        <Route path='/users/:IdUser' element={<UserPage />} />
+        
       </Routes>
 
     </userDataContext.Provider>

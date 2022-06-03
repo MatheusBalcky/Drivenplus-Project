@@ -38,6 +38,7 @@ function PlanComponent ({id ,price, image}){
         </Link>
     )
 }
+
 function renderingComponents (plans){
     if (plans.length > 0){
         return(
