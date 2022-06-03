@@ -16,6 +16,10 @@ export default function HomePage (){
         navigate(`/users/${userData.id}`)
     }
 
+    function subcriptions(){
+        navigate('/subscriptions')
+    }
+
     return(
         <MainContainer>
             <header>
@@ -36,7 +40,7 @@ export default function HomePage (){
                 </div>
 
                 <div className="buttonsBottom">
-                    <div className="button">Mudar Plano</div>
+                    <div onClick={subcriptions} className="button">Mudar Plano</div>
                     <div className="button cancel">Cancelar plano</div>
                 </div>
             </div>
