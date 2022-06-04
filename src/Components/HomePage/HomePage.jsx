@@ -1,27 +1,60 @@
 import userDataContext from "../../context/userDataContext";
-import { useContext } from "react";
+import tokenContext from '../../context/tokenContext';
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
+import axios from "axios";
 
 export default function HomePage (){
     const { userData } = useContext(userDataContext);
+    const { token } = useContext(tokenContext)
+    const [modalCancelIsOpen, setModalCancelIsOpen] = useState(false);
     const navigate = useNavigate();
     const name = userData.name;
     const drivenPlanIco = userData.membership.image;
     const perks = userData.membership.perks;
-    console.log(userData, ' userData no HomePage');
 
     function openUserInfo (){
-        console.log('teste')
         navigate(`/users/${userData.id}`)
     }
-
-    function subcriptions(){
+    function goToSubcriptions(){
         navigate('/subscriptions')
+    }
+
+    function cancelPlan(){
+        const URL = 'https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions';
+        const promise = axios.delete(URL, {headers: { Authorization: `Bearer ${token}`}});
+        promise
+        .then( resp => {
+            alert('Seu plano foi excluído com sucesso, sendo redirecionado para a página de login...');
+            navigate('/');
+            window.location.reload();
+        })
+        .catch ( err => console.log(err, ' foi o erro'))
     }
 
     return(
         <MainContainer>
+
+            <Modal modalCancelIsOpen={modalCancelIsOpen}>
+                    <ion-icon onClick={ () => setModalCancelIsOpen(!modalCancelIsOpen) } name="close-circle"></ion-icon>
+
+                    <ModalBox>
+                    <p>Tem certeza que deseja cancelar o seu plano?</p>
+                    <div>
+                        <button onClick={ () => setModalCancelIsOpen(!modalCancelIsOpen) }
+                        className="buttonNo">Não</button>
+
+                        <button onClick={ () => {
+                            setModalCancelIsOpen(!modalCancelIsOpen);
+                            cancelPlan();
+                        } }
+                        className="buttonYes">Sim</button>
+                    </div>
+                    </ModalBox>
+
+            </Modal>
+
             <header>
                 <img src={drivenPlanIco} alt="" />
                 <ion-icon onClick={openUserInfo} name="person-circle"></ion-icon>
@@ -40,8 +73,8 @@ export default function HomePage (){
                 </div>
 
                 <div className="buttonsBottom">
-                    <div onClick={subcriptions} className="button">Mudar Plano</div>
-                    <div className="button cancel">Cancelar plano</div>
+                    <div onClick={goToSubcriptions} className="button">Mudar Plano</div>
+                    <div  onClick={ () => setModalCancelIsOpen(!modalCancelIsOpen)} className="button cancel">Cancelar plano</div>
                 </div>
             </div>
 
@@ -120,5 +153,68 @@ const MainContainer = styled.div`
     }
     .button.cancel{
         background-color: #FF4747;
+    }
+`
+
+
+
+
+const Modal = styled.div`
+    visibility: ${props => props.modalCancelIsOpen ? 'visible': 'hidden'};
+    background-color: #000000b2;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex; justify-content: center; align-items: center;
+    ion-icon[name="close-circle"]{
+        position: fixed;
+        right: 10px;
+        top: 10px;
+        font-size: 2em;
+        
+        &:hover{
+            cursor: pointer;
+        }
+    }
+`
+
+const ModalBox = styled.div`
+    display: flex; flex-direction: column; gap: 40px;
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: white;
+    p{
+        font-size: 1.2em;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+    }
+    div{
+        display: flex; justify-content: center; gap: 15px;
+    }
+    div button{
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 15px;
+        padding: 15px 45px;
+    }
+    .buttonNo{
+        background-color: #717171;
+    }
+    .buttonNo:hover{
+        cursor: pointer;
+        background-color: #404040;
+    }
+    .buttonYes{
+        background-color: #FF4791;
+    }
+    .buttonYes:hover{
+        cursor: pointer;
+        background-color: #ff1f79;
     }
 `

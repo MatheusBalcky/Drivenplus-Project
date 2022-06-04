@@ -21,7 +21,7 @@ export default function HomePage (){
         promise
     
         .then( resp=>{
-            console.log(resp.data);
+            //console.log(resp.data);
             setUserData(resp.data);
             setToken(resp.data.token);
             if(resp.data.membership === null){
@@ -33,7 +33,7 @@ export default function HomePage (){
     
         .catch(
             err =>{
-                console.log(err)
+                //console.log(err)
                 alert(err.response.data.message);
             }
         )

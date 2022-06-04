@@ -1,8 +1,9 @@
 import axios from "axios";
-import styled from 'styled-components'
+import styled from 'styled-components';
 import tokenContext from "../../context/tokenContext";
 import { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { TailSpin } from  'react-loader-spinner';
 
 export default function SubscriptPage (){
     const [plans, setPlans] = useState([]);
@@ -54,15 +55,11 @@ function renderingComponents (plans){
         )
     } else {
         return (
-            <h1>Carregando...</h1> // ! ADD UMA LIB DE LOADING CIRCULAR HERE
+            <TailSpin color="#FF4791" height={80} width={80} /> // ! ADD UMA LIB DE LOADING CIRCULAR HERE
         )
     }
     
 }
-
-
-
-
 
 
 

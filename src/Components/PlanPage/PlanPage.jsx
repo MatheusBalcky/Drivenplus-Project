@@ -6,22 +6,25 @@ import tokenContext from "../../context/tokenContext";
 import userDataContext from "../../context/userDataContext";
 import IconDollarBill from '../../assets/dollarbill-icon.svg';
 import IconShapeList from '../../assets/shape-list-icon.svg';
+import { TailSpin } from  'react-loader-spinner';
+
 
 export default function PlanPage (){
     const { token } = useContext(tokenContext);
     const { IdPlano } = useParams();
+
     const [plan, setPlan] = useState({});
     const [perks, setPerks] = useState([]);
-    const navigate = useNavigate();
-    const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${IdPlano}`;
     const [openModal, setOpenModal] = useState(false);
     const [signed, setSigned] = useState(false);
+
+    const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${IdPlano}`;
+    const navigate = useNavigate();
 
     useEffect( () => {
         const promise = axios.get(URL, { headers: { Authorization: `Bearer ${token}`}});
         promise
         .then( resp =>{
-            console.log(resp.data)
             setPlan(resp.data);
             setPerks(resp.data.perks);
         })
@@ -68,7 +71,10 @@ export default function PlanPage (){
         )
     } else {
         return(
-            <h1>Carregando...</h1>
+            <Background>
+                <TailSpin color="#FF4791" height={80} width={80} />
+            </Background>
+
         )
     }
 
@@ -100,8 +106,9 @@ function FormComponent({ membershipId, setOpenModal, signed }){
         promise
         .then( resp =>{
             //console.log(resp.data, ' resposta ao assinar');
+            const data = Object.assign(userData)
             setUserData({
-                userData,
+                ...userData,
                 membership: resp.data.membership,
             })
             navigate('/home')
