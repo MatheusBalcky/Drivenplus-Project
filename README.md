@@ -1,7 +1,7 @@
 # Getting Started with Create React App
 
 This project was developed in the bootcamp at Driven Education
-Link to the online[https://drivenplus-project.vercel.app/]
+[Link to the online](https://drivenplus-project.vercel.app/)
 
 ## Available Scripts
 
