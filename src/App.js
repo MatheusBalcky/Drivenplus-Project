@@ -11,6 +11,7 @@ import SubscriptPage from './Components/SubscriptionsPage/SubscriptionsPage';
 import HomePage from './Components/HomePage/HomePage';
 import PlanPage from './Components/PlanPage/PlanPage';
 import UserPage from './Components/UserPage/UserPage';
+import UpdatePage from './Components/UpdatePage/UpdatePage';
 
 function App(){
   const [token, setToken] = useState('');
@@ -32,6 +33,7 @@ function App(){
         <Route path='/subscriptions/:IdPlano' element={<PlanPage />} />
         <Route path='/home' element={<HomePage />}/>
         <Route path='/users/:IdUser' element={<UserPage />} />
+        <Route path='/users/:IdUser/update' element={<UpdatePage />} />
         
       </Routes>
 

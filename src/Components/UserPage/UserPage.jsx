@@ -1,14 +1,22 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from 'react'
 import styled from "styled-components";
 import userDataContext from '../../context/userDataContext';
 
 export default function UserPage (){
+    const { IdUser } = useParams();
     const navigate = useNavigate();
     const { userData } = useContext(userDataContext);
 
     function attUser (e){
         e.preventDefault();
+        //console.log(IdUser)
+        navigate(`/users/${IdUser}/update`)
+
+
+
+        // ! INCREMENTAR ESSA FUNÇÃO PARA CHAMAR A ROTA: /users/:id/update 
+        // ! E ABRIR A TELA DE ATUALIZAR O USUÁRIO
     }
 
     return(
